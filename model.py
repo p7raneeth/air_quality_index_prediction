@@ -1,9 +1,10 @@
 import pandas as pd
 import numpy as numpy
 import os
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup as bs
 import requests
-
+import re
+import sys
 
 url = []
 def generate_url():
@@ -21,11 +22,22 @@ def generate_url():
     return url
 
 
-def extract_data_from_url():
-    
+def extract_data_from_url(url_values):
+    print(f'total url count {len(url_values)}')
+    for i in url_values:
+        print(i)
+        texts = requests.get(i)
+        text_utf = texts.text.encode('utf-8')
+        m, y, _ = re.findall(r'\d+', i)
+        if not os.path.exists(f'./Data/html_parsed_data/{str(y)}/{str(m)}/'):
+            os.makedirs(f"./Data/html_parsed_data/{str(y)}/{str(m)}/")
+        with open("../Data/html_parsed_data/{}/{}/".format(y,m), "wb") as w:
+            w.write(text_utf)
+        sys.stdout.flush()
 
 
 
 
-url_values = generate_url()
-extract_data_from_url(url_values)
+if __name__ == '__main__':
+    url_values = generate_url()
+    extract_data_from_url(url_values)
