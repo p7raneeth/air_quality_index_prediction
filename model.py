@@ -1,4 +1,8 @@
-import pandas as import pd
+import pandas as pd
 import numpy as numpy
+import os
+from bs4 import BeautifulSoup
+import requests
 
-print('Welcome to AQI Prediction project')
+def extract_data():
+    pass 
