@@ -23,19 +23,15 @@ def generate_url():
 
 
 def extract_data_from_url(url_values):
-    print(f'total url count {len(url_values)}')
     for i in url_values:
         print(i)
         texts = requests.get(i)
         text_utf = texts.text.encode('utf-8')
         m, y, _ = re.findall(r'\d+', i)
-        if not os.path.exists(f'./Data/html_parsed_data/{str(y)}/{str(m)}/'):
-            os.makedirs(f"./Data/html_parsed_data/{str(y)}/{str(m)}/")
-        with open("../Data/html_parsed_data/{}/{}/".format(y,m), "wb") as w:
-            w.write(text_utf)
-        sys.stdout.flush()
-
-
+        if not os.path.exists("Data/Html_Data/{}".format(y)):
+            os.makedirs("Data/Html_Data/{}".format(y))
+        with open("Data/Html_Data/{}/{}.html".format(y,m),"wb") as output:
+            output.write(text_utf)
 
 
 if __name__ == '__main__':
